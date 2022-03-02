@@ -1,5 +1,19 @@
 # K10-4.0.2-for-OCP-3.11
 K104.0.2-OCP 3.11
+
+This guide should only be used in the instance where you're migrating applications from OCP 3.11 to a newer version of OCP.  This document is a WIP and we are working on expanding our testing to cover more details.
+
+
+
+Tested solutions on migrating apps from 3.11 to 4.9 with the following details. 
+
+K10 4.0.2 
+Tested OCP 3.11, 4.0 - 4.8
+
+K10 4.5.10
+Tested OCP 4.9 for taking restores from 3.11
+
+
 # Pre-requisites
 You must install these CRD(s) before installing Kasten K10 4.0.2 in your OCP environment.  Download them from this library and place them in the appropriate repo on your OCP cluster for installation.
 ```
