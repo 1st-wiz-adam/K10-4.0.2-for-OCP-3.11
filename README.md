@@ -55,7 +55,8 @@ For the sidecar to choose a security context that can read data from the volume,
 2. If the workload PodSpec has a SecurityContext set, the sidecar does not need an explicit specification and will automatically use the context from the PodSpec.
 3. If the above criteria are not met, by default, no SecurityContext will be set.
 
-#Create a location profile for the migration
+
+# Create a location profile for the migration
 https://docs.kasten.io/latest/usage/configuration.html
 
 In order to fail over an application you must have a location profile configured to move the application and it's resources outside of the 3.11 cluster.  
