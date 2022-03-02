@@ -38,7 +38,7 @@ Infrastructure Profiles or Injecting sidecar will be necessary in order to succe
 helm repo add kasten https://charts.kasten.io/
 helm repo update
 kubectl create namespace kasten-io
-helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2 --set scc.create=true --set injectKanisterSidecar.enabled=true
+helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2 --set scc.create=true --set injectKanisterSidecar.enabled=true (This command will inject sidecar into EVERTYHING in the cluster, please read the warning below before executing)
 
 WARNING
 It is recommended to add at least one namespaceSelector or objectSelector when enabling the injectKanisterSidecar feature. Otherwise, K10 will try to inject a sidecar into every new workload. In the common case, this will lead to undesirable results and potential performance issues.
@@ -61,7 +61,9 @@ For the sidecar to choose a security context that can read data from the volume,
 Additional Documentation: https://docs.kasten.io/latest/usage/configuration.html
 
 In order to fail over an application you must have a location profile configured to move the application and it's resources outside of the 3.11 cluster.  
+
 WARNING
+
 We HIGHLY recommend that you leverage an S3 object storage for the location profile.  The NFS target in Kasten 4.0.2 was just released and we do not recommend it for this use case; in the updated version of K10 NFS target can be leveraged for future application migrations.
 
 Our recommendations in order for application migration 
