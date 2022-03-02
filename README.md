@@ -25,7 +25,7 @@ You do not need to run the pre-flight scripts found on the URL above; they will 
 helm repo add kasten https://charts.kasten.io/
 helm repo update
 kubectl create namespace kasten-io
-helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2
+helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2 --set scc.create=true
 ```
 
 # Additional notes for consideration before migrating applications over to a newer version of OCP 4.x
@@ -38,7 +38,7 @@ Infrastructure Profiles or Injecting sidecar will be necessary in order to succe
 helm repo add kasten https://charts.kasten.io/
 helm repo update
 kubectl create namespace kasten-io
-helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2 --set injectKanisterSidecar.enabled=true
+helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2 --set scc.create=true --set injectKanisterSidecar.enabled=true
 
 WARNING
 It is recommended to add at least one namespaceSelector or objectSelector when enabling the injectKanisterSidecar feature. Otherwise, K10 will try to inject a sidecar into every new workload. In the common case, this will lead to undesirable results and potential performance issues.
