@@ -54,3 +54,15 @@ For the sidecar to choose a security context that can read data from the volume,
 1. If the primary container has a SecurityContext set, it will be used in the sidecar. If there are multiple primary containers, the list of containers will be iterated over and the first one which has a SecurityContext set will be used.
 2. If the workload PodSpec has a SecurityContext set, the sidecar does not need an explicit specification and will automatically use the context from the PodSpec.
 3. If the above criteria are not met, by default, no SecurityContext will be set.
+
+#Create a location profile for the migration
+https://docs.kasten.io/latest/usage/configuration.html
+
+In order to fail over an application you must have a location profile configured to move the application and it's resources outside of the 3.11 cluster.  
+WARNING
+We HIGHLY recommend that you leverage an S3 object storage for the location profile.  The NFS target in Kasten 4.0.2 was just released and we do not recommend it for this use case; in the updated version of K10 NFS target can be leveraged for future application migrations.
+
+Our recommendations in order for application migration 
+Option 1: Amazon S3
+Option 2: S3 object storage (On Prem or provided via Partner)
+Option 3: Gooogle Cloud Storage
