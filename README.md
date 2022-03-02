@@ -33,3 +33,24 @@ helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2
 Read more on (Generic Storage Backup and Restore)
 https://docs.kasten.io/latest/install/generic.html
 Infrastructure Profiles or Injecting sidecar will be necessary in order to succesfully backup workloads from OCP 3.11.  You can use either one but both have limitations.
+
+# Sidecar Injection Method
+helm repo add kasten https://charts.kasten.io/
+helm repo update
+kubectl create namespace kasten-io
+helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2 --set injectKanisterSidecar.enabled=true
+
+WARNING
+It is recommended to add at least one namespaceSelector or objectSelector when enabling the injectKanisterSidecar feature. Otherwise, K10 will try to inject a sidecar into every new workload. In the common case, this will lead to undesirable results and potential performance issues.
+
+For example, to inject sidecars into workloads that match the label component: db and are in namespaces that are labeled with k10/injectKanisterSidecar: true, the following options should be added to the K10 Helm install command:
+--set injectKanisterSidecar.enabled=true \
+--set-string injectKanisterSidecar.objectSelector.matchLabels.component=db \
+--set-string injectKanisterSidecar.namespaceSelector.matchLabels.k10/injectKanisterSidecar=true
+
+The labels set with namespaceSelector and objectSelector are mutually inclusive. This means that if both the options are set to perform sidecar injection, the workloads should have labels matching the objectSelector labels AND they have to be created in the namespace with labels that match the namespaceSelector labels. Similarly, if multiple labels are specified for either namespaceSelector or objectSelector, they will all needed to match for a sidecar injection to occur.
+
+For the sidecar to choose a security context that can read data from the volume, K10 performs the following checks in order:
+1. If the primary container has a SecurityContext set, it will be used in the sidecar. If there are multiple primary containers, the list of containers will be iterated over and the first one which has a SecurityContext set will be used.
+2. If the workload PodSpec has a SecurityContext set, the sidecar does not need an explicit specification and will automatically use the context from the PodSpec.
+3. If the above criteria are not met, by default, no SecurityContext will be set.
