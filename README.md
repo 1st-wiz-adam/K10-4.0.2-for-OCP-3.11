@@ -70,3 +70,42 @@ Our recommendations in order for application migration
 Option 1: Amazon S3
 Option 2: S3 object storage (On Prem or provided via Partner)
 Option 3: Gooogle Cloud Storage
+```
+
+# On the new OCP 4.x cluster (target cluster for the application)
+```
+Install K10 with the same version that you used previously on the older cluster.  You do not need to inject sidecar here.
+
+helm repo add kasten https://charts.kasten.io/
+helm repo update
+kubectl create namespace kasten-io
+helm install k10 kasten/k10 --namespace kasten-io --version 4.0.2 --set scc.create=true
+
+Add the same S3 object location profile used in the 3.11 cluster.
+
+```
+
+# create a backup policy for the application that needs to be migrated (3.11 cluster)
+```
+Create a backup policy to protect the application, you should see sidecarinjected through CLI (or GUI) on the application
+
+Backup the application and make sure the backup and export actions were succsefull.
+```
+
+# create an import policy in the 4.x cluster
+```
+
+On the 3.11 cluster
+Copy the import details on the Backup Policy in the 3.11 cluster it will be needed in order to create the import policy.
+
+On the 4.x cluster
+Create an import policy
+paste the import details in the field and select the S3 object storage that the location.
+
+Run the import policy
+```
+
+# Restore the application
+
+
+
