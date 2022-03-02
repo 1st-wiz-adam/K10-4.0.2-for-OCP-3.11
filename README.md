@@ -11,7 +11,7 @@ K10 4.0.2
 Tested OCP 3.11, 4.0 - 4.8
 
 K10 4.5.10
-Tested OCP 4.9 for taking restores from 3.11
+Tested OCP 4.9 for taking restores from 3.11 that is compatible with K10 4.0.2
 
 
 # Pre-requisites
